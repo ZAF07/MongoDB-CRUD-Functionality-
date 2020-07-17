@@ -1,0 +1,15 @@
+<%- include('partials/header'); -%>
+<div class="jumbotron mt-5">
+  <h1><%= title %></h1>
+  <p>Welcome to <%= title %></p>
+</div>
+
+<% if (success) { %>
+  <small class="alert alert-success"> <%= success %>  </small>
+<% } %>
+
+<% if (success) { %>
+ <script src="../javascripts/dom.js"></script>
+<% } %>
+
+<%- include('partials/footer'); -%>
