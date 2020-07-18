@@ -12,4 +12,14 @@
  <script src="../javascripts/dom.js"></script>
 <% } %>
 
+<% if (posts) { %>
+  <% posts.forEach((post, i) => { %>
+    <div class="card p-3 mb-3">
+      <h4 class="mb-3"> <%= post.title %> </h4>
+        <p> <%= post.body.substring(0,100) %> <small> <a href=" <%= '/posts/' + post.id %> ">...Read More</a> </small> </p>
+    </div>
+  <% }); %>
+
+<% } %>
+
 <%- include('partials/footer'); -%>

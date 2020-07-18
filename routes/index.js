@@ -13,4 +13,6 @@ router.get('/compose', postController.composePost);
 
 router.post('/compose', postController.newPost);
 
+router.get('/posts/:id', postController.individualPosts);
+
 module.exports = router;

@@ -1,12 +1,13 @@
 body {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
   /* font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; */
 }
 
-a {
+/* a {
   color: #00B7FF;
-}
+} */
 
 .fa-linkedin:hover {
   color: #007BB5;

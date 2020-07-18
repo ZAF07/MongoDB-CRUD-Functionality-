@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const _ = require('lodash');
 
 // Define a schema
 
@@ -20,7 +21,7 @@ const Post = mongoose.model('post', postSchema);
 exports.addPost = async (title, body) => {
  let errors = true;
   const newPost = new Post({
-    title,
+    title: _.toString(title),
     body
   })
 
@@ -49,4 +50,50 @@ exports.addPost = async (title, body) => {
   } catch (err) {
     console.log('Catch err');
   }
+};
+
+// Show posts
+
+exports.showPosts = async () => {
+  const postsARR = [];
+
+  try {
+    await Post.find({}, (err, posts) => {
+      posts.forEach((post, i) => {
+        postsARR.push(post);
+      });
+
+      console.log(posts);
+      return postsARR
+    })
+  } catch (err) {
+    console.log('ERROR FINDING POSTS----------> ', err);
+  }
+  return postsARR
+
+  console.log('THIS IS POSTS ARRAY :------> ',postsARR);
+};
+
+
+
+exports.individualPost = async (id) => {
+  let hereYouGo = '';
+  try {
+    await Post.findOne({_id: id}, (err, postFound) => {
+      if (err) {
+        console.log('ERROR FINDING ONE POST-------> ', err);
+      } else {
+        if (postFound) {
+          hereYouGo = postFound
+        } else {
+          hereYouGo = false;
+        }
+      }
+    })
+  } catch (e) {
+    console.log('CATCH ERROR FINDING ONE POST-------> ', e);
+  }
+
+  return hereYouGo;
+
 };

@@ -1,5 +1,6 @@
 const postModel = require('../models/postModel');
-
+const _ = require('lodash');
+const postsARR = [];
 
 exports.newPost = (req,res) => {
   const title = req.body.title;
@@ -26,19 +27,65 @@ exports.newPost = (req,res) => {
         tittleErr: tittleErr,
         bodyErr: bodyErr,
         titleValue: titleValue,
-        bodyValue: bodyValue
+        bodyValue: bodyValue,
+        posts: false
       })
 
     } else {
-      res.render('index', {
-        title: 'Start Blogging Again!',
-        success: 'Got it! You\'ve saved a new post!'});
+      // const postsARR = [];
+      postModel.showPosts().then(posts => {
+        console.log('postController POSTS -------> ', posts);
+        // if (posts.length > 0) {
+        //   posts.forEach((post, i) => {
+        //     if (!postsARR.includes(post)) {
+        //       postsARR.push(post)
+        //     }
+        //   });
+        //
+        //
+        //   // post.push(posts);
+        //   console.log('THIS IS FINAL ARRAY-------> ' ,postsARR);
+        // }
+        res.render('index', {
+          title: 'Start Blogging Again!',
+          success: 'Got it! You\'ve saved a new post!',
+          posts: posts
+         });
+      })
+      // res.render('index', {
+      //   title: 'Start Blogging Again!',
+      //   success: 'Got it! You\'ve saved a new post!',
+      //   posts: false
+      // });
     }
   })
 };
 
 exports.homePage = (req,res) => {
-  res.render('index', { title: 'Start Blogging Again!', success: false });
+
+  // postModel.showPosts();
+  // const postsARR = [];
+  postModel.showPosts().then(posts => {
+    console.log('postController POSTS -------> ', posts);
+    // if (posts.length > 0) {
+    //   posts.forEach((post, i) => {
+    //     if (!postsARR.includes(post)) {
+    //       postsARR.push(post)
+    //     }
+    //   })
+    //
+    //
+    //
+    //   // post.push(posts);
+    //   console.log('THIS IS FINAL ARRAY-------> ' ,postsARR);
+    // }
+    res.render('index', {
+      title: 'Start Blogging Again!',
+      success: false,
+      posts: posts
+     });
+  })
+
 }
 
 exports.composePost = (req,res) => {
@@ -61,3 +108,17 @@ exports.aboutPage = (req,res) => {
   const title = 'Create a New Blog';
   res.send('About Page here');
 };
+
+exports.individualPosts = (req,res) => {
+  const redirectTo = req.params.id;
+  console.log('HELLOOO-------> ', _.toString(req.params.posts));
+  console.log('THIS IS REDIRECTO-------> ', redirectTo);
+
+  postModel.individualPost(redirectTo).then(foundPost => {
+    console.log('RETURNED VALUE OF individualPost-------> ', foundPost)
+    // console.log('YELLOHHH' ,foundPost[0].title);
+    res.render('individualPosts', {
+      post: foundPost
+    });
+  })
+}

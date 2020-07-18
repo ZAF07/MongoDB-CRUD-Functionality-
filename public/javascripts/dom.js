@@ -8,7 +8,7 @@ if (el) {
 function clearEl() {
   const el = document.querySelector('small');
 
-  setTimeout( () => {
+  setTimeout(() => {
     el.style.display = 'none';
   },3000)
 }
