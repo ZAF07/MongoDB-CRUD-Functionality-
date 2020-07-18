@@ -5,10 +5,16 @@
 </div>
 
 <% if (success) { %>
-  <small class="alert alert-success"> <%= success %>  </small>
+  <small class="alert alert-success el"> <%= success %>  </small>
+<% } %>
+<% if (deleted) { %>
+  <small class="alert alert-danger del"> <%= deleted %>  </small>
 <% } %>
 
 <% if (success) { %>
+ <script src="../javascripts/dom.js"></script>
+<% } %>
+<% if (deleted) { %>
  <script src="../javascripts/dom.js"></script>
 <% } %>
 

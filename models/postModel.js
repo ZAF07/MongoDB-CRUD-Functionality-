@@ -53,7 +53,6 @@ exports.addPost = async (title, body) => {
 };
 
 // Show posts
-
 exports.showPosts = async () => {
   const postsARR = [];
 
@@ -74,8 +73,7 @@ exports.showPosts = async () => {
   console.log('THIS IS POSTS ARRAY :------> ',postsARR);
 };
 
-
-
+// Find Indevidual Post
 exports.individualPost = async (id) => {
   let hereYouGo = '';
   try {
@@ -97,3 +95,30 @@ exports.individualPost = async (id) => {
   return hereYouGo;
 
 };
+
+
+// Delete Post
+exports.deletePost = async (postID) => {
+  let deleted;
+  console.log('THIS IS ID-------> ', typeof(_.toString(postID)));
+  console.log('THIS IS FORMAT-------> ', postID.id);
+  try {
+
+
+    await Post.findOneAndDelete({_id:postID.id}, (err, doc) => {
+      if (err) {
+        console.log('ERROR DELETE-------> ', err);
+         deleted = false;
+
+      } else {
+         deleted = true;
+      }
+    })
+  } catch (e) {
+    console.log('CATCH DELETE ERROR-------> ', e);
+     deleted = false;
+  }
+  return deleted;
+  // const del = await Post.deleteOne({body: postID}, (err) {});
+
+}

@@ -49,6 +49,7 @@ exports.newPost = (req,res) => {
         res.render('index', {
           title: 'Start Blogging Again!',
           success: 'Got it! You\'ve saved a new post!',
+          deleted: false,
           posts: posts
          });
       })
@@ -82,6 +83,7 @@ exports.homePage = (req,res) => {
     res.render('index', {
       title: 'Start Blogging Again!',
       success: false,
+      deleted: false,
       posts: posts
      });
   })
@@ -122,3 +124,36 @@ exports.individualPosts = (req,res) => {
     });
   })
 }
+
+exports.deletePost = (req,res) => {
+  const postID = req.params;
+  console.log('HEREE_--------> ', postID);
+  postModel.deletePost(postID).then(status => {
+    if (status == false) {
+      res.render('individualPosts', {
+        post: foundPost
+      });
+    } else {
+      postModel.showPosts().then(posts => {
+        console.log('postController POSTS -------> ', posts);
+        // if (posts.length > 0) {
+        //   posts.forEach((post, i) => {
+        //     if (!postsARR.includes(post)) {
+        //       postsARR.push(post)
+        //     }
+        //   });
+        //
+        //
+        //   // post.push(posts);
+        //   console.log('THIS IS FINAL ARRAY-------> ' ,postsARR);
+        // }
+        res.render('index', {
+          title: 'Start Blogging Again!',
+          success: false,
+          deleted: 'Post successfully deleted',
+          posts: posts
+         });
+      })
+    }
+  })
+};
